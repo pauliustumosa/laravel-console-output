@@ -70,8 +70,12 @@ class ConsoleOutput
         $this->write($string, 'comment', $verbosity);
     }
 
-    public function createProgressBar(int $max = 0): ProgressBar
+    public function createProgressBar(int $max = 0): ?ProgressBar
     {
+        if (!self::isConsoleAvailable()) {
+            return null;
+        }
+
         $progressBar = new ProgressBar($this->output, $max);
 
         if ('\\' !== \DIRECTORY_SEPARATOR || 'Hyper' === getenv('TERM_PROGRAM')) {
