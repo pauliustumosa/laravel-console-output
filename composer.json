@@ -27,7 +27,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "Tumosa\\LaravelConsoleOutput\\LaravelConsoleOutputServiceProvider"
+        "Tumosa\\LaravelConsoleOutput\\ConsoleOutputServiceProvider"
       ]
     }
   },
