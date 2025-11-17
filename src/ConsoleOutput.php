@@ -4,6 +4,7 @@ namespace Tumosa\LaravelConsoleOutput;
 
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput as SymfonyConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -67,6 +68,19 @@ class ConsoleOutput
     public function comment(string $string, $verbosity = null): void
     {
         $this->write($string, 'comment', $verbosity);
+    }
+
+    public function createProgressBar(int $max = 0): ProgressBar
+    {
+        $progressBar = new ProgressBar($this->output, $max);
+
+        if ('\\' !== \DIRECTORY_SEPARATOR || 'Hyper' === getenv('TERM_PROGRAM')) {
+            $progressBar->setEmptyBarCharacter('░'); // light shade character \u2591
+            $progressBar->setProgressCharacter('');
+            $progressBar->setBarCharacter('▓'); // dark shade character \u2593
+        }
+
+        return $progressBar;
     }
 
     private function isConsoleAvailable(): bool
