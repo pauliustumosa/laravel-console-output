@@ -94,7 +94,11 @@ class ConsoleOutput
         }
 
         // Detect TTY
-        if (!\function_exists('posix_isatty') || !posix_isatty(STDOUT)) {
+        try {
+            if (!\function_exists('posix_isatty') || !posix_isatty(STDOUT)) {
+                return false;
+            }
+        } catch (\Throwable $e) {
             return false;
         }
 
